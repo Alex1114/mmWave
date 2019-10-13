@@ -138,17 +138,17 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         pcl::PointCloud<PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<PointXYZ>);
         pcl::ConditionAnd<PointXYZ>::Ptr range_cond (new pcl::ConditionAnd<PointXYZ> ());
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
-            pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::GT, 0.1)));
+            pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::GT, 0.5)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
-            pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::LT, 5.0)));
+            pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::LT, 3.0)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
             pcl::FieldComparison<PointXYZ> ("y", pcl::ComparisonOps::GT, -2.0)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
             pcl::FieldComparison<PointXYZ> ("y", pcl::ComparisonOps::LT, 2.0)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
-            pcl::FieldComparison<PointXYZ> ("z", pcl::ComparisonOps::GT, -0.1)));
+            pcl::FieldComparison<PointXYZ> ("z", pcl::ComparisonOps::GT, -0.3)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
-            pcl::FieldComparison<PointXYZ> ("y", pcl::ComparisonOps::LT, 2.0)));
+            pcl::FieldComparison<PointXYZ> ("z", pcl::ComparisonOps::LT, 3.0)));
         // Build the filter
         pcl::ConditionalRemoval<PointXYZ> condrem;
         condrem.setCondition (range_cond);
@@ -170,7 +170,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         outrem.filter(*cloud_filtered);
 
         // cloud_filtered->header.frame_id = in_cloud_msg->header.frame_id;
-        cloud_filtered->header.frame_id = "map";
+        cloud_filtered->header.frame_id = "odom";
 
         pub_filtered_pc.publish(cloud_filtered);
 
@@ -207,7 +207,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
 
                 // Visualization
                 visualization_msgs::MarkerPtr marker(new visualization_msgs::Marker);
-                marker->header.frame_id = "map";
+                marker->header.frame_id = "odom";
                 // marker->header.frame_id = in_cloud_msg->header.frame_id;
                 marker->header.stamp = ros::Time::now();
                 marker->type = fixed_shape_;
