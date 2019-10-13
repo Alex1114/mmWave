@@ -1,0 +1,23 @@
+*.ipynb_checkpoints/
+*.tmp
+*.pth
+*.pkl
+*.h5
+*.caffemodel
+*.bag
+*.pcd
+*.pyc
+*.swp
+*.swo
+*.vscode
+*.log
+*.zip
+*.tar
+
+#Bag file
+mmwave_data/
+
+# ROS related
+build/
+devel/
+.catkin_workspace

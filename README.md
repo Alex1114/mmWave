@@ -1,1 +1,2 @@
 # mmwave
+rosrun mmwave_detection simple_tracking_node
