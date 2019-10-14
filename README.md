@@ -12,7 +12,7 @@ $ roslaunch ti_mmwave_rospkg rviz_1443_3d.launch config:=3d_short_range
 $ roslaunch ti_mmwave_rospkg rviz_1443_3d.launch config:=3d
 ```
 
-# mmwave_detection
+# mmwave_detection (filter)
 ```
 rosrun mmwave_detection simple_tracking_node
 ```
