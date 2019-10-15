@@ -641,7 +641,7 @@ void *DataUARTHandler::sortIncomingData( void )
                            )
                         {
                             //ROS_INFO("Kept point");
-                            // copy: points[i] => points[j]
+                            //copy: points[i] => points[j]
                             memcpy( &RScan->points[j], &RScan->points[i], sizeof(RScan->points[i]));
                             j++;
                         }
