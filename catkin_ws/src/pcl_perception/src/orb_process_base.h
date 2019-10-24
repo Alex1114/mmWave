@@ -24,26 +24,29 @@ using namespace std;
 class icp_loc{
   public:
 	icp_loc();
-	void pc_callback(const sensor_msgs::PointCloud2 msg);    // sensor_msgs::PointCloud2
+	void pc0_callback(const sensor_msgs::PointCloud2 msg);    // sensor_msgs::PointCloud2
+	void pc1_callback(const sensor_msgs::PointCloud2 msg);    // sensor_msgs::PointCloud2
 	void pose_callback(const geometry_msgs::Pose msg);    // sensor_msgs::PointCloud2
 
   private:
 	Subscriber pose_sub;
-	Subscriber pc_sub;
+	Subscriber pc_sub0;
+	Subscriber pc_sub1;
 	Publisher pc_map;
 	Publisher pose_pub_client;
 	geometry_msgs::PoseArray posearr_msg;
 
 	PointCloud<PointXYZ>::Ptr map;
 	PointCloud<PointXYZ>::Ptr map_process;
-	PointCloud<PointXYZ>::Ptr pc_input;
+	PointCloud<PointXYZ>::Ptr pc_input0;
+	PointCloud<PointXYZ>::Ptr pc_input1;
 	PointCloud<PointXYZ>::Ptr pc_filter;
 	PointCloud<PointXYZ>::Ptr result;
 	int count;
 	VoxelGrid<PointXYZ> downsample;
 
-	// tf::TransformBroadcaster br;
-	// tf::TransformListener listener;
+	tf::TransformBroadcaster br;
+	tf::TransformListener listener;
 
 	sensor_msgs::PointCloud2 ros_cloud_msg;
 	sensor_msgs::PointCloud2 origin_map;
