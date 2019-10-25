@@ -79,6 +79,8 @@ class icp_loc{
 	PointCloud<PointXYZ>::Ptr pc_input1;
 	PointCloud<PointXYZ>::Ptr pc_filter;
 	PointCloud<PointXYZ>::Ptr result;
+	PointCloud<PointXYZ>::Ptr scene_cloud_;
+	std::vector<PointCloud<PointXYZ>> source_clouds;
 	int count;
 	VoxelGrid<PointXYZ> downsample;
 
