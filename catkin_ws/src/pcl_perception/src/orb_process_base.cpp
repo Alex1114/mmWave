@@ -31,12 +31,10 @@ icp_loc::icp_loc(){
 	downsample.setLeafSize (0.6f, 0.6f, 0.6f);
 	// Ros 0
 	// pc_process = nh.advertise<sensor_msgs::PointCloud2> ("/pc_part_map", 10);
-	pc_map = nh.advertise<sensor_msgs::PointCloud2> ("/mmwave_mapping", 10);
 	//pose_pub_client = nh.advertise<geometry_msgs::PoseArray> ("/poses", 10);
-
-	pc_sub0 = nh.subscribe("/ti_mmwave/radar_scan_pcl_0", 1, &icp_loc::pc0_callback, this);
+	pc_map = nh.advertise<sensor_msgs::PointCloud2> ("/mmwave_mapping", 10);
+	pc_sub0 = nh.subscribe("filtered_pc", 1, &icp_loc::pc0_callback, this);
 	pc_sub1 = nh.subscribe("/ti_mmwave/radar_scan_pcl_1", 1, &icp_loc::pc1_callback, this);
-
 	//pose_sub = nh.subscribe("/move_base_simple/goal", 1, &icp_loc::pose_callback, this);
 
 }

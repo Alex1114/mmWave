@@ -17,8 +17,8 @@
 #include <geometry_msgs/Pose.h>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <visualization_msgs/Marker.h>
@@ -88,7 +88,7 @@ private:
     // Visulization
     visualization_msgs::MarkerArray marker_array_;
 
-    const uint32_t fixed_shape_ = visualization_msgs::Marker::CUBE;
+    const uint32_t fixed_shape_ = visualization_msgs::Marker::LINE_STRIP;
 };
 
 
@@ -109,7 +109,7 @@ SimpleTrackingNode::SimpleTrackingNode(ros::NodeHandle* nh):nh_(*nh){
     pub_filtered_pc = nh_.advertise<sensor_msgs::PointCloud2>("filtered_pc", 1);
     pub_marker_array_ = nh_.advertise<visualization_msgs::MarkerArray>("detection_markers", 1);
 
-    sub_mmwave_pc = nh_.subscribe("/mmWaveDataHdl/RScan", 1, &SimpleTrackingNode::mmwave_data_cb, this);
+    sub_mmwave_pc = nh_.subscribe("/ti_mmwave/radar_scan_pcl_0", 1, &SimpleTrackingNode::mmwave_data_cb, this);
     
     // ROS service
     tf_listener_ = new tf::TransformListener();
@@ -138,7 +138,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         pcl::PointCloud<PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<PointXYZ>);
         pcl::ConditionAnd<PointXYZ>::Ptr range_cond (new pcl::ConditionAnd<PointXYZ> ());
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
-            pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::GT, 0.5)));
+            pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::GT, 0.03)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
             pcl::FieldComparison<PointXYZ> ("x", pcl::ComparisonOps::LT, 3.0)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
@@ -146,7 +146,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
             pcl::FieldComparison<PointXYZ> ("y", pcl::ComparisonOps::LT, 2.0)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
-            pcl::FieldComparison<PointXYZ> ("z", pcl::ComparisonOps::GT, -0.3)));
+            pcl::FieldComparison<PointXYZ> ("z", pcl::ComparisonOps::GT, -0.2)));
         range_cond->addComparison (pcl::FieldComparison<PointXYZ>::ConstPtr (new
             pcl::FieldComparison<PointXYZ> ("z", pcl::ComparisonOps::LT, 3.0)));
         // Build the filter
@@ -170,7 +170,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         outrem.filter(*cloud_filtered);
 
         // cloud_filtered->header.frame_id = in_cloud_msg->header.frame_id;
-        cloud_filtered->header.frame_id = "map";
+        cloud_filtered->header.frame_id = "base_link";
 
         pub_filtered_pc.publish(cloud_filtered);
 
@@ -207,7 +207,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
 
                 // Visualization
                 visualization_msgs::MarkerPtr marker(new visualization_msgs::Marker);
-                marker->header.frame_id = "odom";
+                marker->header.frame_id = "base_link";
                 // marker->header.frame_id = in_cloud_msg->header.frame_id;
                 marker->header.stamp = ros::Time::now();
                 marker->type = fixed_shape_;
