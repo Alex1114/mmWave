@@ -130,9 +130,9 @@ void icp_loc::pc1_callback(const sensor_msgs::PointCloud2 msg){
 
 	*map += *pc_input1;
 
-	toROSMsg(*map, ros_cloud_msg);
-	ros_cloud_msg.header.frame_id = msg.header.frame_id;
-	pc_map.publish(ros_cloud_msg);
+	//toROSMsg(*map, ros_cloud_msg);
+	//ros_cloud_msg.header.frame_id = msg.header.frame_id;
+	//pc_map.publish(ros_cloud_msg);
 	count ++;
 
 }
