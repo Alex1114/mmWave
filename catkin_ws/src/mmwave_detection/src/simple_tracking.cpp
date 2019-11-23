@@ -164,13 +164,13 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         pcl::RadiusOutlierRemoval<pcl::PointXYZ> outrem;
         // build the filter
         outrem.setInputCloud(cloud_filtered);
-        outrem.setRadiusSearch(0.1);
+        outrem.setRadiusSearch(0.8);
         outrem.setMinNeighborsInRadius(3);
         // apply filter
         outrem.filter(*cloud_filtered);
 
         // cloud_filtered->header.frame_id = in_cloud_msg->header.frame_id;
-        cloud_filtered->header.frame_id = "base_link";
+        cloud_filtered->header.frame_id = "mmwave_left_link";
 
         pub_filtered_pc.publish(cloud_filtered);
 
@@ -207,7 +207,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
 
                 // Visualization
                 visualization_msgs::MarkerPtr marker(new visualization_msgs::Marker);
-                marker->header.frame_id = "base_link";
+                marker->header.frame_id = "mmwave_left_link";
                 // marker->header.frame_id = in_cloud_msg->header.frame_id;
                 marker->header.stamp = ros::Time::now();
                 marker->type = fixed_shape_;
