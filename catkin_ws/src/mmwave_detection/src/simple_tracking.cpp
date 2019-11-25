@@ -164,7 +164,7 @@ void SimpleTrackingNode::mmwave_data_cb(const sensor_msgs::PointCloud2ConstPtr& 
         pcl::RadiusOutlierRemoval<pcl::PointXYZ> outrem;
         // build the filter
         outrem.setInputCloud(cloud_filtered);
-        outrem.setRadiusSearch(0.8);
+        outrem.setRadiusSearch(1.2);
         outrem.setMinNeighborsInRadius(3);
         // apply filter
         outrem.filter(*cloud_filtered);

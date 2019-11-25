@@ -10,13 +10,13 @@
 // Ros
 #include <tf/transform_listener.h>
 #include <ros/ros.h>
+#include <ros/timer.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PoseArray.h>
 #include <ros/package.h>
 #include <tf/transform_broadcaster.h>
 #include <visualization_msgs/Marker.h>
-#include <ros/package.h>
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <cv_bridge/cv_bridge.h>
@@ -62,13 +62,18 @@ class icp_loc{
   public:
 	icp_loc();
 	void pc0_callback(const sensor_msgs::PointCloud2 msg);    // sensor_msgs::PointCloud2
-	void pc1_callback(const sensor_msgs::PointCloud2 msg);    // sensor_msgs::PointCloud2
-	void pose_callback(const geometry_msgs::Pose msg);    // sensor_msgs::PointCloud2
+	void pc1_callback(const sensor_msgs::PointCloud2 msg); 
+	void pc2_callback(const sensor_msgs::PointCloud2 msg);   
+	void pc3_callback(const sensor_msgs::PointCloud2 msg);  // sensor_msgs::PointCloud2
+	void pose_callback(const geometry_msgs::Pose msg); 
+	void timerCallback(const ros::TimerEvent&);   // sensor_msgs::PointCloud2
 
   private:
 	Subscriber pose_sub;
 	Subscriber pc_sub0;
 	Subscriber pc_sub1;
+	Subscriber pc_sub2;
+	Subscriber pc_sub3;
 	Publisher pc_map;
 	Publisher pose_pub_client;
 	geometry_msgs::PoseArray posearr_msg;
@@ -77,6 +82,8 @@ class icp_loc{
 	PointCloud<PointXYZ>::Ptr map_process;
 	PointCloud<PointXYZ>::Ptr pc_input0;
 	PointCloud<PointXYZ>::Ptr pc_input1;
+	PointCloud<PointXYZ>::Ptr pc_input2;
+	PointCloud<PointXYZ>::Ptr pc_input3;
 	PointCloud<PointXYZ>::Ptr pc_filter;
 	PointCloud<PointXYZ>::Ptr result;
 	PointCloud<PointXYZ>::Ptr scene_cloud_;
