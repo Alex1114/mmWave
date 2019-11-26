@@ -27,10 +27,9 @@ icp_loc::icp_loc(){
 	pc_sub1 = nh.subscribe("/ti_mmwave/radar_scan_pcl_1", 1, &icp_loc::pc1_callback, this);
     pc_sub2 = nh.subscribe("/ti_mmwave/radar_scan_pcl_2", 1, &icp_loc::pc2_callback, this);
     pc_sub3 = nh.subscribe("/ti_mmwave/radar_scan_pcl_3", 1, &icp_loc::pc3_callback, this);
-	ros::Timer timer = nh.createTimer(ros::Duration(0.1), &icp_loc::timerCallback, this);
-
+	
 }
-void icp_loc::timerCallback(const ros::TimerEvent&)
+void icp_loc::timerCallback(const ros::TimerEvent& event)
 {
 	*map += *pc_input0;
 	*map += *pc_input1;
@@ -40,14 +39,15 @@ void icp_loc::timerCallback(const ros::TimerEvent&)
 	toROSMsg(*map, ros_cloud_msg);
 	ros_cloud_msg.header.frame_id = "/base_link";
 	pc_map.publish(ros_cloud_msg);
-
-	//map->points.clear();
+	ROS_INFO("ok");
+	map->points.clear();
 
 }
 
 void icp_loc::pc0_callback(const sensor_msgs::PointCloud2 msg){
 
 	fromROSMsg (msg, *pc_input0);
+
 	tf::StampedTransform transform;
 	try{
 		ros::Duration five_seconds(5.0);
@@ -146,7 +146,9 @@ void icp_loc::pc3_callback(const sensor_msgs::PointCloud2 msg){
 
 int main(int argc, char** argv){
 	init(argc, argv, "orb_process_base");
-	icp_loc icp_loc;
+	icp_loc icp;
+	NodeHandle nh;
+	ros::Timer timer = nh.createTimer(ros::Duration(0.1), &icp_loc::timerCallback, &icp);
 	spin();
 	return 0;
 }

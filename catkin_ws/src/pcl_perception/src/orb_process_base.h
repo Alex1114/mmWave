@@ -66,7 +66,7 @@ class icp_loc{
 	void pc2_callback(const sensor_msgs::PointCloud2 msg);   
 	void pc3_callback(const sensor_msgs::PointCloud2 msg);  // sensor_msgs::PointCloud2
 	void pose_callback(const geometry_msgs::Pose msg); 
-	void timerCallback(const ros::TimerEvent&);   // sensor_msgs::PointCloud2
+	void timerCallback(const ros::TimerEvent& event);   // sensor_msgs::PointCloud2
 
   private:
 	Subscriber pose_sub;
