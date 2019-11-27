@@ -79,8 +79,10 @@ class icp_loc{
 	geometry_msgs::PoseArray posearr_msg;
 
 	PointCloud<PointXYZ>::Ptr map;
+	PointCloud<PointXYZ>::Ptr new_map;
 	PointCloud<PointXYZ>::Ptr map_process;
 	PointCloud<PointXYZ>::Ptr pc_input0;
+	PointCloud<PointXYZ>::Ptr pc_slam_input0;
 	PointCloud<PointXYZ>::Ptr pc_input1;
 	PointCloud<PointXYZ>::Ptr pc_input2;
 	PointCloud<PointXYZ>::Ptr pc_input3;
