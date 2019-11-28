@@ -19,7 +19,7 @@
   </node>
 
   <!-- mmWaveQuickConfig node (terminates after configuring mmWave sensor) -->
-  <node pkg="ti_mmwave_rospkg" type="mmWaveQuickConfig" name="ti_mmwave_config" ns="radar_2" args="$(find ti_mmwave_rospkg)/cfg/IWR6843_AOP.cfg" output="screen" />
+  <node pkg="ti_mmwave_rospkg" type="mmWaveQuickConfig" name="ti_mmwave_config" ns="radar_2" args="$(find ti_mmwave_rospkg)/cfg/IWR6843_AOP_new.cfg" output="screen" />
 
 </launch>
 
