@@ -9,6 +9,18 @@ project(ti_mmwave_rospkg)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   nodelet
+  cv_bridge
+  geometry_msgs
+  sensor_msgs
+  nav_msgs
+  std_msgs
+  geographic_msgs
+  geodesy
+  tf
+  tf_conversions
+  nav_msgs
+  pcl_conversions
+  pcl_ros
   roscpp
   serial
   std_msgs
@@ -22,6 +34,8 @@ find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 
 find_package(PCL 1.7.2 REQUIRED)
+
+find_package(Eigen3 REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -125,12 +139,17 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
+
+
+
+
 include_directories( include
   ${catkin_INCLUDE_DIRS}
   ${ti_mmwave_rospkg_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
   ${pthread_INCLUDE_DIRS}
   ${rt_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
 )
 
 link_directories( ${Boost_LIBRARIES_DIRS} )
@@ -217,6 +236,9 @@ add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS} mmwave ${serial_EXPO
 add_executable(mmWaveQuickConfig src/mmWaveQuickConfig.cpp)
 target_link_libraries(mmWaveQuickConfig ${catkin_LIBRARIES} mmwave)
 add_dependencies(mmWaveQuickConfig ${catkin_EXPORTED_TARGETS} mmwave)
+
+add_executable(mmwave_mapping src/mmwave_mapping.h src/mmwave_mapping.cpp)
+target_link_libraries(mmwave_mapping ${catkin_LIBRARIES})
 
 #############
 ## Testing ##

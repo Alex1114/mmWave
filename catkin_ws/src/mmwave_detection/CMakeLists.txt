@@ -158,6 +158,9 @@ include_directories(
 add_executable(simple_tracking_node src/simple_tracking.cpp)
 target_link_libraries(simple_tracking_node ${catkin_LIBRARIES})
 
+add_executable(pc_tolaser src/pc_tolaser.cpp)
+target_link_libraries(pc_tolaser ${catkin_LIBRARIES})
+
 
 #############
 ## Install ##
