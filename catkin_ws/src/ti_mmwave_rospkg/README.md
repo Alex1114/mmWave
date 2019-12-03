@@ -3,7 +3,7 @@
 ### Available devices:
 ```
 TI mmWave IWR1443BOOST
-TI mmWave IWR6843BOOST
+TI mmWave IWR6843AOP
 ```
 ---
 
