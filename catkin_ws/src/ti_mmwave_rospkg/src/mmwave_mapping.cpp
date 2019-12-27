@@ -35,11 +35,10 @@ void icp_loc::timerCallback(const ros::TimerEvent& event)
 	*map += *pc_input1;
 	*map += *pc_input2;
 	*map += *pc_input3;
-	
+	//cout <<map->size();
 	toROSMsg(*map, ros_cloud_msg);
 	ros_cloud_msg.header.frame_id = "/base_link";
 	pc_map.publish(ros_cloud_msg);
-	ROS_INFO("ok");
 	map->points.clear();
 
 }
