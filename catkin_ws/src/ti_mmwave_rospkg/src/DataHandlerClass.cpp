@@ -1,9 +1,9 @@
 #include <DataHandlerClass.h>
 
 DataUARTHandler::DataUARTHandler(ros::NodeHandle* nh) : currentBufp(&pingPongBuffers[0]) , nextBufp(&pingPongBuffers[1]) {
-    DataUARTHandler_pub = nh->advertise<sensor_msgs::PointCloud2>("/ti_mmwave/radar_scan_pcl", 100);
-    radar_scan_pub = nh->advertise<ti_mmwave_rospkg::RadarScan>("/ti_mmwave/radar_scan", 100);
-    marker_pub = nh->advertise<visualization_msgs::Marker>("/ti_mmwave/radar_scan_markers", 100);
+    DataUARTHandler_pub = nh->advertise<sensor_msgs::PointCloud2>("ti_mmwave/radar_scan_pcl", 100);
+    radar_scan_pub = nh->advertise<ti_mmwave_rospkg::RadarScan>("ti_mmwave/radar_scan", 100);
+    marker_pub = nh->advertise<visualization_msgs::Marker>("ti_mmwave/radar_scan_markers", 100);
     maxAllowedElevationAngleDeg = 90; // Use max angle if none specified
     maxAllowedAzimuthAngleDeg = 90; // Use max angle if none specified
 

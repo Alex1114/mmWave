@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<launch>
-  <include file="$(find ti_mmwave_rospkg)/launch/multi_6843_0.launch"></include>
-  <include file="$(find ti_mmwave_rospkg)/launch/multi_6843_1.launch"></include>
-  <include file="$(find ti_mmwave_rospkg)/launch/multi_6843_2.launch"></include>
-  <include file="$(find ti_mmwave_rospkg)/launch/multi_6843_3.launch"></include> 
-</launch>

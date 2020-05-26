@@ -108,7 +108,7 @@ SimpleTrackingNode::SimpleTrackingNode(ros::NodeHandle* nh):nh_(*nh){
     pub_filtered_pc = nh_.advertise<sensor_msgs::PointCloud2>("filtered_pc", 1);
     //pub_marker_array_ = nh_.advertise<visualization_msgs::MarkerArray>("detection_markers", 1);
 
-    sub_mmwave_pc = nh_.subscribe("/mmwave_mapping", 1, &SimpleTrackingNode::mmwave_data_cb, this);
+    sub_mmwave_pc = nh_.subscribe("mmwave_mapping", 1, &SimpleTrackingNode::mmwave_data_cb, this);
     
     // ROS service
     tf_listener_ = new tf::TransformListener();

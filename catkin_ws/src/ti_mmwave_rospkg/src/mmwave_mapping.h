@@ -58,15 +58,17 @@ using namespace ros;
 using namespace pcl;
 using namespace std;
 
-class icp_loc{
+class MMmapping{
   public:
-	icp_loc();
+	MMmapping();
 	void pc0_callback(const sensor_msgs::PointCloud2 msg);    // sensor_msgs::PointCloud2
 	void pc1_callback(const sensor_msgs::PointCloud2 msg); 
 	void pc2_callback(const sensor_msgs::PointCloud2 msg);   
 	void pc3_callback(const sensor_msgs::PointCloud2 msg);  // sensor_msgs::PointCloud2
 	void pose_callback(const geometry_msgs::Pose msg); 
 	void timerCallback(const ros::TimerEvent& event);   // sensor_msgs::PointCloud2
+	Eigen::Matrix4f get_transfrom(string link_name);
+
 
   private:
 	Subscriber pose_sub;
@@ -77,6 +79,11 @@ class icp_loc{
 	Publisher pc_map;
 	Publisher pose_pub_client;
 	geometry_msgs::PoseArray posearr_msg;
+
+	Eigen::Matrix4f trans0;
+	Eigen::Matrix4f trans1;
+	Eigen::Matrix4f trans2;
+	Eigen::Matrix4f trans3;
 
 	PointCloud<PointXYZ>::Ptr map;
 	PointCloud<PointXYZ>::Ptr new_map;
